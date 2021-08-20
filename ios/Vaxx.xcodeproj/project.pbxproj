@@ -16,6 +16,7 @@
 		2D458DF226BF561100041D3F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2D458DF026BF561100041D3F /* LaunchScreen.storyboard */; };
 		2D458E0026BF599400041D3F /* Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D458DFF26BF599400041D3F /* Record.swift */; };
 		2D886B6126C5988700FBDB97 /* ShareSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D886B6026C5988700FBDB97 /* ShareSheet.swift */; };
+		2D9EE62026CF7251006444D1 /* NoRecordsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D9EE61F26CF7251006444D1 /* NoRecordsView.swift */; };
 		2DCD0ED126C3647900A5AC11 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DCD0ED026C3647900A5AC11 /* ImagePicker.swift */; };
 		2DCD0ED526C36BC100A5AC11 /* UIImageExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DCD0ED426C36BC100A5AC11 /* UIImageExtensions.swift */; };
 		2DCD0ED926C3740200A5AC11 /* FileManagerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DCD0ED826C3740200A5AC11 /* FileManagerExtensions.swift */; };
@@ -36,6 +37,7 @@
 		2D458DF326BF561100041D3F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2D458DFF26BF599400041D3F /* Record.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Record.swift; sourceTree = "<group>"; };
 		2D886B6026C5988700FBDB97 /* ShareSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheet.swift; sourceTree = "<group>"; };
+		2D9EE61F26CF7251006444D1 /* NoRecordsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoRecordsView.swift; sourceTree = "<group>"; };
 		2DCD0ED026C3647900A5AC11 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		2DCD0ED426C36BC100A5AC11 /* UIImageExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageExtensions.swift; sourceTree = "<group>"; };
 		2DCD0ED826C3740200A5AC11 /* FileManagerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManagerExtensions.swift; sourceTree = "<group>"; };
@@ -126,6 +128,7 @@
 				2D458DE926BF560F00041D3F /* MainPage.swift */,
 				2D886B6026C5988700FBDB97 /* ShareSheet.swift */,
 				2DCD0EDC26C4A55300A5AC11 /* ZoomableScrollView.swift */,
+				2D9EE61F26CF7251006444D1 /* NoRecordsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -261,6 +264,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2D9EE62026CF7251006444D1 /* NoRecordsView.swift in Sources */,
 				2D458DE626BF560F00041D3F /* AppDelegate.swift in Sources */,
 				2D886B6126C5988700FBDB97 /* ShareSheet.swift in Sources */,
 				2D458DE826BF560F00041D3F /* SceneDelegate.swift in Sources */,
@@ -421,6 +425,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = live.ditto.vaxx;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -444,6 +449,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = live.ditto.vaxx;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

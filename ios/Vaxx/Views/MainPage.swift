@@ -78,45 +78,68 @@ struct MainPage: View {
     
     var body: some View {
         NavigationView {
-            List {
-                ForEach(viewModel.records, id: \.id) { record in
-                    Image(fileName: record.fileName)
-                        .resizable()
-                        .scaledToFit()
-                        .onTapGesture {
-                            viewModel.tappedRecord(record: record)
+            VStack {
+                if viewModel.records.count > 0 {
+                    List {
+                        ForEach(viewModel.records, id: \.id) { record in
+                            Image(fileName: record.fileName)
+                                .resizable()
+                                .scaledToFit()
+                                .onTapGesture {
+                                    viewModel.tappedRecord(record: record)
+                                }
+                                .sheet(isPresented: $viewModel.isPresentingImageViewerPage) {
+                                    ImageViewerPage(isPresentingSheet: $viewModel.isPresentingImageViewerPage, recordFileName: $viewModel.tappedRecordFileName)
+                                }
                         }
-                        .sheet(isPresented: $viewModel.isPresentingImageViewerPage) {
-                            ImageViewerPage(isPresentingSheet: $viewModel.isPresentingImageViewerPage, recordFileName: $viewModel.tappedRecordFileName)
-                        }
+                        .onDelete(perform: viewModel.delete)
+                        .onMove(perform: viewModel.move)
+                    }
+                } else {
+                    NoRecordsView(cameraButtonClicked: {
+                        viewModel.showingCamera = true
+                    }, photoLibraryButtonClicked: {
+                        viewModel.showingImagePicker = true
+                    })
                 }
-                .onDelete(perform: viewModel.delete)
-                .onMove(perform: viewModel.move)
+            }
+            .sheet(isPresented: $viewModel.showingCamera, content: {
+                ImagePicker(sourceType: .camera, selectedImage: { image in
+                    self.viewModel.addImage(image: image)
+                })
+            })
+            .sheet(isPresented: $viewModel.showingImagePicker, content: {
+                ImagePicker(sourceType: .photoLibrary, selectedImage: { image in
+                    self.viewModel.addImage(image: image)
+                })
+            })
+            .toolbar {
+                ToolbarItemGroup(placement: .navigationBarLeading) {
+                    Menu {
+                        Button(action: {
+                            viewModel.showingCamera = true
+                        }) {
+                            Label("Take a picture", systemImage: "camera")
+                        }
+                        .sheet(isPresented: $viewModel.showingCamera, content: {
+                            ImagePicker(sourceType: .camera, selectedImage: { image in
+                                self.viewModel.addImage(image: image)
+                            })
+                        })
+                        Button(action: {
+                            viewModel.showingImagePicker = true
+                        }) {
+                            Label("Import from Photo Library", systemImage: "photo.on.rectangle")
+                        }
+                    }
+                    label: {
+                        Label("Add", systemImage: "plus")
+                    }
+                }
             }
             .navigationTitle("Vaxx")
-            .navigationBarItems(leading:
-                                    HStack {
-                                        Button(action: {
-                                            self.viewModel.showingImagePicker = true
-                                        }) {
-                                            Image(systemName: "doc.fill.badge.plus").imageScale(.large)
-                                        }.sheet(isPresented: $viewModel.showingImagePicker, content: {
-                                            ImagePicker(sourceType: .photoLibrary, selectedImage: { image in
-                                                self.viewModel.addImage(image: image)
-                                            })
-                                        })
-                                        Spacer(minLength: 12)
-                                        Button(action: {
-                                            self.viewModel.showingCamera = true
-                                        }) {
-                                            Image(systemName: "camera.fill").imageScale(.large)
-                                        }.sheet(isPresented: $viewModel.showingCamera, content: {
-                                            ImagePicker(sourceType: .camera, selectedImage: { image in
-                                                self.viewModel.addImage(image: image)
-                                            })
-                                        })
-                                    },
-                                trailing: EditButton()
+            .navigationBarItems(
+                trailing: EditButton()
             )
         }
         
