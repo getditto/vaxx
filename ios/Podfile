@@ -8,5 +8,5 @@ target 'Vaxx' do
   # Pods for Vaxx
   pod "DittoSwift", ">=1.0.19"
   pod "CombineDitto"
-  pod "TOCropViewController"
+  pod 'CropViewController'
 end

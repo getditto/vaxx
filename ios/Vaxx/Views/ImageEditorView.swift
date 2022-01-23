@@ -6,14 +6,14 @@
 //
 
 import SwiftUI
-import TOCropViewController
+import CropViewController
 
 
 struct ImageEditorView: UIViewControllerRepresentable {
 
     typealias DidCropCallback = ((UIImage?) -> Void)
 
-    class Coordinator: NSObject, TOCropViewControllerDelegate {
+    class Coordinator: NSObject, CropViewControllerDelegate {
 
         var finishedEditingCallback: DidCropCallback? = nil
 
@@ -22,26 +22,25 @@ struct ImageEditorView: UIViewControllerRepresentable {
             super.init()
         }
 
-        func cropViewController(_ cropViewController: TOCropViewController, didCropTo image: UIImage, with cropRect: CGRect, angle: Int) {
-            finishedEditingCallback?(image)
-        }
-
-        func cropViewController(_ cropViewController: TOCropViewController, didFinishCancelled cancelled: Bool) {
+        func cropViewController(_ cropViewController: CropViewController, didFinishCancelled cancelled: Bool) {
             finishedEditingCallback?(nil)
         }
 
+        func cropViewController(_ cropViewController: CropViewController, didCropToImage image: UIImage, withRect cropRect: CGRect, angle: Int) {
+            finishedEditingCallback?(image)
+        }
     }
 
     let image: UIImage
     let finishedEditingCallback: DidCropCallback?
 
-    func makeUIViewController(context: Context) -> TOCropViewController {
-        let controller = TOCropViewController(image: image)
+    func makeUIViewController(context: Context) -> CropViewController {
+        let controller = CropViewController(image: image)
         controller.delegate = context.coordinator
         return controller
     }
 
-    func updateUIViewController(_ uiViewController: TOCropViewController, context: Context) {
+    func updateUIViewController(_ uiViewController: CropViewController, context: Context) {
         uiViewController.delegate = context.coordinator
     }
 
@@ -49,7 +48,7 @@ struct ImageEditorView: UIViewControllerRepresentable {
         return Coordinator(finishedEditingCallback: self.finishedEditingCallback)
     }
 
-    typealias UIViewControllerType = TOCropViewController
+    typealias UIViewControllerType = CropViewController
 }
 
 

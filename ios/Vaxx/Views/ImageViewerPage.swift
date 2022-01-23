@@ -28,6 +28,7 @@ struct ImageViewerPage: View {
         }
 
         func finishedEditingImage(image: UIImage?) {
+            self.showingCropAndRotateSheet = false
             guard let image = image else {
                 return
             }
@@ -36,7 +37,6 @@ struct ImageViewerPage: View {
             AppDelegate.ditto.store["records"].findByID(record._id).update { mutableDoc in
                 mutableDoc?["updatedOn"].set(ISO8601DateFormatter().string(from: Date()))
             }
-            self.showingCropAndRotateSheet = false
         }
     }
 

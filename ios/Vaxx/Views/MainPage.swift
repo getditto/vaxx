@@ -90,6 +90,7 @@ struct MainPage: View {
         }
 
         func finishedEditingImage(image: UIImage?) {
+            self.showingCropAndRotateSheet = false
             guard let image = image, let record = recordToCropAndRotate else {
                 return
             }
@@ -98,7 +99,6 @@ struct MainPage: View {
             AppDelegate.ditto.store["records"].findByID(record._id).update { mutableDoc in
                 mutableDoc?["updatedOn"].set(ISO8601DateFormatter().string(from: Date()))
             }
-            self.showingCropAndRotateSheet = false
             self.recordToCropAndRotate = nil
         }
 
