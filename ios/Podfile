@@ -6,6 +6,7 @@ target 'Vaxx' do
   use_frameworks!
 
   # Pods for Vaxx
-  pod "DittoSwift", ">=1.0.8"
+  pod "DittoSwift", ">=1.0.19"
   pod "CombineDitto"
+  pod "TOCropViewController"
 end

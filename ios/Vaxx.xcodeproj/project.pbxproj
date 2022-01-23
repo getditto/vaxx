@@ -17,6 +17,7 @@
 		2D458E0026BF599400041D3F /* Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D458DFF26BF599400041D3F /* Record.swift */; };
 		2D886B6126C5988700FBDB97 /* ShareSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D886B6026C5988700FBDB97 /* ShareSheet.swift */; };
 		2D9EE62026CF7251006444D1 /* NoRecordsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D9EE61F26CF7251006444D1 /* NoRecordsView.swift */; };
+		2DAC962A279CC0B700D7A79C /* ImageEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DAC9629279CC0B700D7A79C /* ImageEditorView.swift */; };
 		2DCD0ED126C3647900A5AC11 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DCD0ED026C3647900A5AC11 /* ImagePicker.swift */; };
 		2DCD0ED526C36BC100A5AC11 /* UIImageExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DCD0ED426C36BC100A5AC11 /* UIImageExtensions.swift */; };
 		2DCD0ED926C3740200A5AC11 /* FileManagerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DCD0ED826C3740200A5AC11 /* FileManagerExtensions.swift */; };
@@ -38,6 +39,7 @@
 		2D458DFF26BF599400041D3F /* Record.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Record.swift; sourceTree = "<group>"; };
 		2D886B6026C5988700FBDB97 /* ShareSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheet.swift; sourceTree = "<group>"; };
 		2D9EE61F26CF7251006444D1 /* NoRecordsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoRecordsView.swift; sourceTree = "<group>"; };
+		2DAC9629279CC0B700D7A79C /* ImageEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageEditorView.swift; sourceTree = "<group>"; };
 		2DCD0ED026C3647900A5AC11 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		2DCD0ED426C36BC100A5AC11 /* UIImageExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageExtensions.swift; sourceTree = "<group>"; };
 		2DCD0ED826C3740200A5AC11 /* FileManagerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManagerExtensions.swift; sourceTree = "<group>"; };
@@ -129,6 +131,7 @@
 				2D886B6026C5988700FBDB97 /* ShareSheet.swift */,
 				2DCD0EDC26C4A55300A5AC11 /* ZoomableScrollView.swift */,
 				2D9EE61F26CF7251006444D1 /* NoRecordsView.swift */,
+				2DAC9629279CC0B700D7A79C /* ImageEditorView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -269,6 +272,7 @@
 				2D886B6126C5988700FBDB97 /* ShareSheet.swift in Sources */,
 				2D458DE826BF560F00041D3F /* SceneDelegate.swift in Sources */,
 				2DCD0ED926C3740200A5AC11 /* FileManagerExtensions.swift in Sources */,
+				2DAC962A279CC0B700D7A79C /* ImageEditorView.swift in Sources */,
 				2DCD0ED526C36BC100A5AC11 /* UIImageExtensions.swift in Sources */,
 				2DCD0ED126C3647900A5AC11 /* ImagePicker.swift in Sources */,
 				2D458E0026BF599400041D3F /* Record.swift in Sources */,
@@ -416,16 +420,17 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Vaxx/Preview Content\"";
 				DEVELOPMENT_TEAM = 3T2VMFZPPQ;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Vaxx/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = live.ditto.vaxx;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -440,16 +445,17 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Vaxx/Preview Content\"";
 				DEVELOPMENT_TEAM = 3T2VMFZPPQ;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Vaxx/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = live.ditto.vaxx;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

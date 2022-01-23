@@ -21,8 +21,11 @@ struct MainPage: View {
         @Published var inputImage: UIImage?
         @Published var editMode: EditMode = EditMode.inactive
         @Published var isPresentingImageViewerPage = false
-        @Published var tappedRecordFileName: String?
-        @Published var showingShareSheet = false
+        @Published var tappedRecord: Record?
+        @Published var recordToDelete: Record?
+        @Published var showingCropAndRotateSheet = false
+        @Published var showDeleteActionConfirmation = false
+        @Published var recordToCropAndRotate: Record? = nil
         
         init() {
             AppDelegate.ditto.store["records"].findAll()
@@ -50,13 +53,21 @@ struct MainPage: View {
             ])
         }
         
-        func delete(at offsets: IndexSet) {
-            let idsToDelete = offsets.map { self.records[$0]._id }
-            AppDelegate.ditto.store.write { trx in
-                for idToDelete in idsToDelete {
-                    trx["records"].findByID(idToDelete).remove()
-                }
-            }
+        func tappedDeleteButton(record: Record) {
+            self.recordToDelete = record
+            showDeleteActionConfirmation = true
+        }
+
+        func delete() {
+            self.showDeleteActionConfirmation = false
+            self.recordToDelete = nil
+            guard let record = self.recordToDelete else { return }
+            AppDelegate.ditto.store["records"].findByID(record._id).remove()
+        }
+
+        func cancelDelete() {
+            self.showDeleteActionConfirmation = false
+            self.recordToDelete = nil
         }
 
         func move(from source: IndexSet, to destination: Int) {
@@ -70,10 +81,32 @@ struct MainPage: View {
 
         func tappedRecord(record: Record) {
             self.isPresentingImageViewerPage = true
-            self.tappedRecordFileName = record.fileName
+            self.tappedRecord = record
+        }
+
+        func tappedCropAndRotate(record: Record) {
+            self.showingCropAndRotateSheet = true
+            self.recordToCropAndRotate = record
+        }
+
+        func finishedEditingImage(image: UIImage?) {
+            guard let image = image, let record = recordToCropAndRotate else {
+                return
+            }
+            let filePath = FileManager.documentsDirectory.appendingPathComponent(record.fileName)
+            try! image.jpeg(.high)!.write(to: filePath)
+            AppDelegate.ditto.store["records"].findByID(record._id).update { mutableDoc in
+                mutableDoc?["updatedOn"].set(ISO8601DateFormatter().string(from: Date()))
+            }
+            self.showingCropAndRotateSheet = false
+            self.recordToCropAndRotate = nil
+        }
+
+        func tappedReorderButton() {
+            editMode = editMode == .inactive ? .active : .inactive
         }
     }
-    
+
     @ObservedObject private var viewModel = ViewModel()
     
     var body: some View {
@@ -89,18 +122,45 @@ struct MainPage: View {
                                     viewModel.tappedRecord(record: record)
                                 }
                                 .sheet(isPresented: $viewModel.isPresentingImageViewerPage) {
-                                    ImageViewerPage(isPresentingSheet: $viewModel.isPresentingImageViewerPage, recordFileName: $viewModel.tappedRecordFileName)
+                                    if let tappedRecord = viewModel.tappedRecord {
+                                        ImageViewerPage(record: tappedRecord)
+                                    }
+                                    else { EmptyView () }
+                                }
+                                .swipeActions(allowsFullSwipe: false) {
+                                    Button {
+                                        viewModel.tappedCropAndRotate(record: record)
+                                    } label: {
+                                        Label("Crop & Rotate", systemImage: "crop.rotate")
+                                    }
+                                    .tint(.blue)
+
+                                    Button(role: .destructive) {
+                                        viewModel.tappedDeleteButton(record: record)
+                                    } label: {
+                                        Label("Delete Record", systemImage: "trash.fill")
+                                    }
                                 }
                         }
-                        .onDelete(perform: viewModel.delete)
                         .onMove(perform: viewModel.move)
-                    }
+
+
+                    }.environment(\.editMode, $viewModel.editMode)
                 } else {
                     NoRecordsView(cameraButtonClicked: {
                         viewModel.showingCamera = true
                     }, photoLibraryButtonClicked: {
                         viewModel.showingImagePicker = true
                     })
+                }
+            }
+            .confirmationDialog("Are you sure?", isPresented: $viewModel.showDeleteActionConfirmation, titleVisibility: .visible) {
+                Button("Yes, Delete", role: .destructive) {
+                    viewModel.delete()
+                }
+                .accentColor(.red)
+                Button("Cancel", role: .cancel) {
+                    viewModel.cancelDelete()
                 }
             }
             .sheet(isPresented: $viewModel.showingCamera, content: {
@@ -113,7 +173,26 @@ struct MainPage: View {
                     self.viewModel.addImage(image: image)
                 })
             })
+            .sheet(isPresented: $viewModel.showingCropAndRotateSheet, content: {
+                if let fileName = viewModel.recordToCropAndRotate?.fileName, let image = UIImage(fileName: fileName) {
+                    ImageEditorView(image: image, finishedEditingCallback: { image in
+                        viewModel.finishedEditingImage(image: image)
+                    })
+                } else {
+                    EmptyView()
+                }
+            })
+            .sheet(isPresented: $viewModel.showingCamera, content: {
+                ImagePicker(sourceType: .camera, selectedImage: { image in
+                    self.viewModel.addImage(image: image)
+                })
+            })
             .toolbar {
+                ToolbarItemGroup(placement: .navigationBarTrailing) {
+                    Button("Reorder") {
+                        viewModel.tappedReorderButton()
+                    }
+                }
                 ToolbarItemGroup(placement: .navigationBarLeading) {
                     Menu {
                         Button(action: {
@@ -121,26 +200,18 @@ struct MainPage: View {
                         }) {
                             Label("Take a picture", systemImage: "camera")
                         }
-                        .sheet(isPresented: $viewModel.showingCamera, content: {
-                            ImagePicker(sourceType: .camera, selectedImage: { image in
-                                self.viewModel.addImage(image: image)
-                            })
-                        })
                         Button(action: {
                             viewModel.showingImagePicker = true
                         }) {
                             Label("Import from Photo Library", systemImage: "photo.on.rectangle")
                         }
                     }
-                    label: {
-                        Label("Add", systemImage: "plus")
-                    }
+                label: {
+                    Label("Add", systemImage: "plus")
+                }
                 }
             }
             .navigationTitle("Vaxx")
-            .navigationBarItems(
-                trailing: EditButton()
-            )
         }
         
     }

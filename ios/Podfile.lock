@@ -4,22 +4,26 @@ PODS:
   - DittoObjC (1.0.8)
   - DittoSwift (1.0.8):
     - DittoObjC (= 1.0.8)
+  - TOCropViewController (2.6.0)
 
 DEPENDENCIES:
   - CombineDitto
   - DittoSwift (>= 1.0.8)
+  - TOCropViewController
 
 SPEC REPOS:
   trunk:
     - CombineDitto
     - DittoObjC
     - DittoSwift
+    - TOCropViewController
 
 SPEC CHECKSUMS:
   CombineDitto: 0fbbe1c0fc7088a0d70dfb27decc43e5b5974c4b
   DittoObjC: c8e66e103fcce2ef574e670764de1757ddef3a92
   DittoSwift: 372cb133c1206e90353c24e001721acb3440d822
+  TOCropViewController: 3105367e808b7d3d886a74ff59bf4804e7d3ab38
 
-PODFILE CHECKSUM: 73df58a4e864f721e7ae0d2ee942317e59752141
+PODFILE CHECKSUM: b6c204c1bc3d15a3ef71f978fce018c7e3da988b
 
-COCOAPODS: 1.10.1
+COCOAPODS: 1.11.2
